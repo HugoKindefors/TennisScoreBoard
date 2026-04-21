@@ -1,4 +1,6 @@
-﻿namespace TennisScore.Domain;
+﻿using TennisScore.Domain.Entities;
+
+namespace TennisScore.Domain;
 
 public class TennisSet
 {

@@ -12,7 +12,8 @@ public class TennisScoreDTO
     public int PlayerBSets { get; set; }
     public string Server { get; set; } = string.Empty;
     public string? Winner { get; set; }
-    public string PointDisplay { get; set; } = string.Empty;
+    public string PlayerAPointDisplay { get; set; } = string.Empty;
+    public string PlayerBPointDisplay { get; set; } = string.Empty;
 
     public static TennisScoreDTO FromMatch(TennisMatch match)
     {
@@ -26,9 +27,8 @@ public class TennisScoreDTO
             PlayerBSets = match.PlayerBSets,
             Server = match.Server.ToString(),
             Winner = match.Winner?.ToString(),
-            PointDisplay = match.CurrentGame.GetScoreDisplay()
+            PlayerAPointDisplay = match.CurrentGame.PlayerAPointDisplay,
+            PlayerBPointDisplay = match.CurrentGame.PlayerBPointDisplay
         };
     }
-
-
 }

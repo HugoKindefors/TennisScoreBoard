@@ -1,10 +1,15 @@
-﻿namespace TennisScore.Domain;
+﻿using TennisScore.Domain.Entities;
+
+namespace TennisScore.Domain;
 
 public class TennisGame
 {
     public int PlayerAScore { get; private set; }
     public int PlayerBScore { get; private set; }
     public Player? Winner { get; private set; }
+
+    public string PlayerAPointDisplay => GetPointDisplay(PlayerAScore, PlayerBScore);
+    public string PlayerBPointDisplay => GetPointDisplay(PlayerBScore, PlayerAScore);
 
 
     public bool IsOver => Winner is not null;
@@ -17,14 +22,6 @@ public class TennisGame
         else PlayerBScore++;
 
         TryGameWinner();
-    }
-
-    public void UndoPoint(Player player)
-    {
-        if (IsOver) return;
-
-        if (player == Player.A && PlayerAScore > 0) PlayerAScore--;
-        else if (player == Player.B && PlayerBScore > 0) PlayerBScore--;
     }
 
     private void TryGameWinner()
@@ -41,30 +38,25 @@ public class TennisGame
         PlayerBScore = 0;
         Winner = null;
     }
-    public string GetScoreDisplay()
-    {
-        var a = PlayerAScore;
-        var b = PlayerBScore;
 
-        if (a >= 3 && b >= 3)
+    private string GetPointDisplay(int myScore, int opponentScore)
+    {
+        if (myScore >= 3 && opponentScore >= 3)
         {
-            if (a == b) return "Deuce";
-            return a > b ? "Advantage A" : "Advantage B";
+            return myScore > opponentScore ? "AD" : "40";
         }
 
-        string ToTennisPoint(int p) => p switch
-        {
-            0 => "Love",
-            1 => "Fifteen",
-            2 => "Thirty",
-            3 => "Forty",
-            _ => p.ToString()
-        };
-
-        if (a == b)
-            return $"{ToTennisPoint(a)}-All";
-
-        return $"{ToTennisPoint(a)}-{ToTennisPoint(b)}";
+        return ScoreToNumber(myScore);
     }
+
+
+    private static string ScoreToNumber(int score) => score switch
+    {
+        0 => "0",
+        1 => "15",
+        2 => "30",
+        3 => "40",
+        _ => "0"
+    };
 
 }

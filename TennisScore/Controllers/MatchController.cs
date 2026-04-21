@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TennisScore.Domain;
+using TennisScore.Domain.Entities;
 using TennisScore.Interface;
 
 namespace TennisScore.Controllers;
@@ -34,5 +34,11 @@ public class MatchController : ControllerBase
     public IActionResult Reset()
     {
         return Ok(_matchService.Reset());
+    }
+
+    [HttpPost("undo")]
+    public IActionResult Undo()
+    {
+        return Ok(_matchService.Undo());
     }
 }

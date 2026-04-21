@@ -1,4 +1,5 @@
 ﻿using TennisScore.Domain;
+using TennisScore.Domain.Entities;
 using TennisScore.DTOs;
 using TennisScore.Interface;
 
@@ -22,6 +23,12 @@ public class MatchService : IMatchService
     public TennisScoreDTO Reset()
     {
         _match = new TennisMatch();
+        return TennisScoreDTO.FromMatch(_match);
+    }
+
+    public TennisScoreDTO Undo()
+    {
+        _match.Undo();
         return TennisScoreDTO.FromMatch(_match);
     }
 }
